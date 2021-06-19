@@ -15,6 +15,7 @@ using WebApp.Authorization;
 using WebApp.Entities;
 using WebApp.Helpers;
 using WebApp.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApp
 {
@@ -30,8 +31,8 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddDbContext<DataContext>();
+            services.AddDistributedMemoryCache();
+            //services.AddDbContext<DataContext>();
             services.AddCors(); 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -65,6 +66,11 @@ namespace WebApp
             // configure strongly typed settings object
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
+            services.AddDbContext<DataContext>(options => {
+
+                options.UseSqlServer(Configuration.GetConnectionString("SqlCon"));
+            });
+
             // configure DI for application services
             services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<IUserService, UserService>();
@@ -72,9 +78,9 @@ namespace WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            createTestUser(context);
+            //createTestUser(context);
             app.UseRouting();
             // global cors policy
             app.UseCors(x => x
@@ -102,19 +108,6 @@ namespace WebApp
             //});
 
         }
-        private void createTestUser(DataContext context)
-        {
-            // add hardcoded test user to db on startup
-            var testUser = new User
-            {
-                FirstName = "Test",
-                LastName = "User",
-                Username = "test",
-                Role = "Admin",
-                PasswordHash = BCryptNet.HashPassword("test")
-            };
-            context.Users.Add(testUser);
-            context.SaveChanges();
-        }
+        
     }
 }
