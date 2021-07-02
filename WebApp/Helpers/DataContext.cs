@@ -11,6 +11,7 @@ namespace WebApp.Helpers
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Roles> Roles { get; set; }
 
         //private readonly IConfiguration Configuration;
         //public DataContext(IConfiguration configuration)

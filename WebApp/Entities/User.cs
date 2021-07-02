@@ -11,6 +11,9 @@ namespace WebApp.Entities
         public string Username { get; set; }
         public string Role { get; set; }
 
+        public ICollection<Roles> Roles { get; set; }
+
+
         [JsonIgnore]
         public string PasswordHash { get; set; }
 
