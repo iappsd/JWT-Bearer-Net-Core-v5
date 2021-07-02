@@ -37,7 +37,6 @@ namespace WebApp.Authorization
                 Subject = new ClaimsIdentity(new[] { 
                     new Claim("id", user.Id.ToString()),
                     new Claim(ClaimTypes.Role, user.Role),
-
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

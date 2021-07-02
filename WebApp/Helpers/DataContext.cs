@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using WebApp.Entities;
+using WebApp.Models;
 
 namespace WebApp.Helpers
 {

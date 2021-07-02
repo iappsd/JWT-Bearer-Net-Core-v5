@@ -46,6 +46,21 @@ namespace WebApp.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("WebApp.Models.Roles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("WebApp.Entities.User", b =>
                 {
                     b.OwnsMany("WebApp.Entities.RefreshToken", "RefreshTokens", b1 =>
