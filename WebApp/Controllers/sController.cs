@@ -38,8 +38,7 @@ namespace WebApp.Controllers
                     PasswordHash = BCryptNet.HashPassword("a")
                 };
                 context.Users.Add(testUser);
-                context.SaveChanges();
-            
+                context.SaveChanges();            
             return Ok(User);
 
         }
